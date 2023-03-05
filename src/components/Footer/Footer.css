@@ -1,0 +1,29 @@
+.footer {
+    background-color: white;
+    color: rgb(33, 37, 41);
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    font-size: 1em;
+    animation: slide-in 25s linear infinite;
+    white-space: nowrap;
+}
+
+.footer p {
+    display: inline-block;
+    line-height: 40px;
+    width: auto;
+}
+
+@keyframes slide-in {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
