@@ -22,6 +22,9 @@ const Navigation = () => {
                         <Link to="/signup">
                             <Nav.Link as="span">Sign Up</Nav.Link>
                         </Link>
+                        <Link to="/login">
+                            <Nav.Link as="span">Log In</Nav.Link>
+                        </Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

@@ -13,9 +13,10 @@
 
 base URL `/battles`
 
-| URL            | Description       | Protected |
-| -------------- | ----------------- | --------- |
-| `/`            | Battles list page |           |
-| `/details/:id` | Battle details page |           |
-| `/edit/:id`    | Battle edit page    | ✅        |
-| `/create`      | Create new Battle   | ✅        |
+| URL            | Description           | Protected |
+| -------------- | --------------------- | --------- |
+| `/`            | Battles list page     |           |
+| `/details/:id` | Battle details page   |           |
+| `/create`      | Create new Battle     | ✅        |
+| `/edit/:id`    | Battle edit page      | ✅        |
+| `/delete/:id`  | Battle delete page    | ✅        |
