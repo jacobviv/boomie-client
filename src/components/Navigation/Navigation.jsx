@@ -14,7 +14,7 @@ const Navigation = () => {
     // const themeText = themeValue === 'light' ? 'Tema oscuro' : 'Tema claro'
 
     return (
-        <Navbar bg="white" variant="light" expand="lg" className='navBar'>  {/* bg white is not a thing */}
+        <Navbar bg="white" variant="light" expand="lg" className='navBar mb-3' >  {/* bg white is not a thing */}
             <Container>
                 <Navbar.Brand href="/">BOOMIE</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

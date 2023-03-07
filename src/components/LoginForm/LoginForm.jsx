@@ -46,7 +46,7 @@ const LoginForm = () => {
             </Form.Group>
 
             <div className="d-grid">
-                <Button variant="dark" type="submit">Acceder</Button>
+                <Button variant="dark" type="submit">Access</Button>
             </div>
 
         </Form>
