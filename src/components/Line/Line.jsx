@@ -1,10 +1,10 @@
 import './Line.css'
 
-const FooterBorder = () => {
+const Line = () => {
 
     return (
-        <div className="footer-border"></div>
+        <div className="line"></div>
     )
 }
 
-export default FooterBorder
+export default Line
