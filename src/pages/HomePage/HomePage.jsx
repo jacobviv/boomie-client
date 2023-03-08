@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 import BattlesList from "../../components/BattlesList/BattlesList"
 import Loader from "../../components/Loader/Loader"
 import NewBattleForm from "../../components/NewBattleForm/NewBattleForm"
-import SearchBar from "../../components/SearchBar/SearchBar"
 import { AuthContext } from "../../contexts/auth.context"
 import battlesService from "../../services/battles.services"
 
@@ -49,18 +48,18 @@ const HomePage = () => {
 
         <>
             <Container>
+                <h1>THIS IS THE BOOMIE APP!</h1>
+                <hr />
+                <h2> Just another MERN to compare books with their screen adaptations, and viceversa.</h2 >
+                {user && <Link to="/user/details/:id">Go to your Personal Archive</Link>}
+                {!user && <Link to="/login">Login to start creating your very own Book vs Movie Battle</Link>}
+                <hr />
                 {
                     isLoading
                         ?
                         <Loader />
                         :
                         <>
-                            <h1>THIS IS THE BOOMIE APP!</h1>
-                            <hr />
-                            <h2> Just another MERN to compare books with their screen adaptations, and viceversa.</h2 >
-                            {user && <Link to="/user/details/:id">Go to your Personal Archive</Link>}
-                            {!user && <Link to="/login">Login to start creating your very own Book vs Movie Battle</Link>}
-                            <hr />
                             <BattlesList battles={battles} />
                         </>
                 }

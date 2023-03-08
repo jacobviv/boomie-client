@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const BattleCard = ({ name, bookID, movieID, _id }) => {
     return (
-        <Card className='mb-3 BattleCard'>
+        <Card className='mb-3'>
             {/* <Card.Img variant="top" src={imageUrl} /> */}
             <Card.Body>
                 <Card.Text>Book: {bookID}</Card.Text>

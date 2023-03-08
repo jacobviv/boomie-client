@@ -2,19 +2,19 @@ import { useContext } from 'react'
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
-// import { ThemeContext } from '../../contexts/theme.context'
+import { ThemeContext } from '../../contexts/theme.context'
 
 
 const Navigation = () => {
 
-    // const { themeValue, switchTheme } = useContext(ThemeContext)
+    const { themeValue, switchTheme } = useContext(ThemeContext)
     const { user, logout } = useContext(AuthContext)
 
-    // const navbarStyle = themeValue === 'dark' ? 'light' : 'dark'
-    // const themeText = themeValue === 'light' ? 'Tema oscuro' : 'Tema claro'
+    const navbarStyle = themeValue === 'dark' ? 'dark' : 'light'
+    const themeText = themeValue === 'light' ? 'Movie Mode' : 'Book Mode'
 
     return (
-        <Navbar bg="white" variant="light" expand="lg" className='navBar mb-3' >  {/* bg white is not a thing */}
+        <Navbar bg={navbarStyle} variant={navbarStyle} expand="lg" className='navBar mb-4' >
             <Container>
                 <Navbar.Brand href="/">BOOMIE</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -48,16 +48,18 @@ const Navigation = () => {
                                 </>
                         }
                     </Nav>
-                    {
-                        user
-                        &&
-                        <Link to={`/details/${user._id}`}>
-                            <Nav.Link as="span">{user.username}, you are the best!</Nav.Link>
+                    <Nav className='display'>
+                        {
+                            user
+                            &&
+                            <Link to={`/details/${user._id}`}>
+                                <Nav.Link as="span">{user.username}, you are the best!</Nav.Link>
+                            </Link>
+                        }
+                        <Link>
+                            <Nav.Link as="span" onClick={switchTheme} className="d-flex">{themeText}</Nav.Link>
                         </Link>
-                    }
-                    {/* <Navbar.Text>
-                        <span onClick={switchTheme} className="d-flex">{themeText}</span>
-                    </Navbar.Text> */}
+                    </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar >

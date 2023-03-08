@@ -9,11 +9,46 @@ img {
 
 .navBar {
   margin-bottom: 20px;
-  margin-top: 10px;
-  border-bottom: solid 2px black;
+  padding-top: 20px;
   padding-bottom: 20px;
 }
 
 .navBar a {
   font-size: 1.2em;
+}
+
+.display {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.App.dark {
+  background-color: #212529;
+  color: white;
+  min-height: 100vh;
+  font-family: sans-serif;
+  line-height: 1.4em;
+}
+
+.App.dark Button {
+  background-color: white;
+  color: #212529
+}
+
+.App.dark .navBar {
+  border-bottom: solid 2px white;
+}
+
+.App.light {
+  background-color: white;
+  color: #212529;
+  min-height: 100vh;
+  font-family: serif;
+  font-size: 1.1em;
+  line-height: 1.3em;
+}
+
+.App.light .navBar {
+  border-bottom: solid 3px #212529;
 }
