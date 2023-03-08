@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Form } from "react-bootstrap"
-import { useContext } from "react"
+// import { useContext } from "react"
 // import { ThemeContext } from "../../contexts/theme.context"
 
 const SearchBar = ({ handleSearchBar }) => {
