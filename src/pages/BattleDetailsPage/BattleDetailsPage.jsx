@@ -18,6 +18,16 @@ const BattleDetailsPage = () => {
             .catch(err => console.error(err))
     }, [])
 
+    const handleDelete = () => {
+        battlesService
+            .deleteBattleById(battle_id)
+            .then(() => {
+                window.location = "/battles"
+            })
+            .catch((err) => console.error(err))
+    }
+
+
     return (
 
         <Container>
@@ -42,6 +52,12 @@ const BattleDetailsPage = () => {
                     <Link to="/battles">
                         <Button as="figure" variant="dark">Back to Battles</Button>
                     </Link>
+                    <Link to={`/battles/edit/${battle_id}`}>
+                        <Button as="figure" variant="warning">Edit Battle</Button>
+                    </Link>
+                    <Button as="figure" variant="danger" onClick={handleDelete}>
+                        Delete Battle
+                    </Button>
                 </Col>
 
                 <Col md={{ span: 4 }}>

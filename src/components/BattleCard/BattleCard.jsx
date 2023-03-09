@@ -11,6 +11,9 @@ const BattleCard = ({ name, bookID, movieID, _id }) => {
                 <Link to={`/battles/details/${_id}`}>
                     <Card.Text>{name}</Card.Text>
                 </Link>
+                <Link to={`/battles/edit/${_id}`}>
+                    <Card.Text>EDIT</Card.Text>
+                </Link>
             </Card.Body>
         </Card>
     )
