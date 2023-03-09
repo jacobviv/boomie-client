@@ -7,6 +7,7 @@ import LoginPage from "../pages/LoginPage/LoginPage"
 import SignupPage from "../pages/SignupPage/SignupPage"
 import ProfilePage from "../pages/ProfilePage/ProfilePage"
 import PrivateRoute from "./PrivateRoute"
+import BattleCreatePage from "../pages/BattleCreatePage/BattleCreatePage"
 
 const AppRoutes = () => {
 
@@ -19,12 +20,12 @@ const AppRoutes = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/battles" element={<BattlesPage />} />
             <Route path="/battles/details/:battle_id" element={<BattleDetailsPage />} />
-            <Route path="/battles/edit/:battle_id" element={<EditBattlePage />} />
-            <Route path="/battles/delete/:battle_id" element={<BattlesPage />} />
-            <Route path="/battles/create" element={<p>BATTLE CREATE</p>} />
 
             <Route element={<PrivateRoute />}>
                 <Route path="/details/:id" element={<ProfilePage />} />
+                <Route path="/battles/edit/:battle_id" element={<EditBattlePage />} />
+                <Route path="/battles/delete/:battle_id" element={<BattlesPage />} />
+                <Route path="/battles/create" element={<BattleCreatePage />} />
             </Route>
 
             <Route path="*" element={<p>404</p>} />

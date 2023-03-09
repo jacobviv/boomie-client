@@ -3,6 +3,8 @@ import { Col, Row } from "react-bootstrap"
 
 const BattlesList = ({ battles }) => {
 
+    console.log("QUIENES SON LAS BATTLES", battles)
+
     return (
         <Row>
             {

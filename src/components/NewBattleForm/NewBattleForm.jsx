@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Button, Form, Row, Col } from "react-bootstrap";
+import { useState } from "react"
+import { Button, Form, Row, Col } from "react-bootstrap"
 import battlesServices from './../../services/battles.services'
 
 const NewBattleForm = ({ fireFinalActions }) => {
@@ -40,12 +40,12 @@ const NewBattleForm = ({ fireFinalActions }) => {
 
                 <Form.Group as={Col} controlId="movieID">
                     <Form.Label>Movie Name</Form.Label>
-                    <Form.Control type="text" name="movieID" value={battleData.mmovieID} onChange={handleInputChange} />
+                    <Form.Control type="text" name="movieID" value={battleData.movieID} onChange={handleInputChange} />
                 </Form.Group>
             </Row>
             <Button variant="dark" type="submit">Create Book vs Movie Battle</Button>
         </Form>
-    );
+    )
 }
 
 export default NewBattleForm

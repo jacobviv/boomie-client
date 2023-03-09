@@ -6,6 +6,17 @@ class BattleService {
         this.api = axios.create({
             baseURL: `${process.env.REACT_APP_API_URL}/battles`
         })
+
+        this.api.interceptors.request.use((config) => {
+
+            const storedToken = localStorage.getItem("authToken");
+
+            if (storedToken) {
+                config.headers = { Authorization: `Bearer ${storedToken}` }
+            }
+
+            return config
+        })
     }
 
     getBattles() {
@@ -17,7 +28,7 @@ class BattleService {
     }
 
     saveBattle(battleData) {
-        return this.api.post('/saveBattle', battleData)
+        return this.api.post('/create', battleData)
     }
 
     getBattleByOwner(id) {

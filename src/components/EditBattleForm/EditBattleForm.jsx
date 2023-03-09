@@ -10,6 +10,7 @@ const EditBattleForm = ({ fireFinalActions }) => {
     const navigate = useNavigate()
     const { themeValue } = useContext(ThemeContext)
 
+
     const [battleData, setBattleData] = useState({
         name: '',
         bookID: '',
@@ -50,6 +51,7 @@ const EditBattleForm = ({ fireFinalActions }) => {
             .catch(err => console.log(err))
     }
 
+    console.log(battleData)
 
 
     return (
