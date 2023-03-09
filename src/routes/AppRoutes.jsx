@@ -5,6 +5,8 @@ import EditBattlePage from "../pages/EditBattlePage/EditBattlePage"
 import HomePage from "../pages/HomePage/HomePage"
 import LoginPage from "../pages/LoginPage/LoginPage"
 import SignupPage from "../pages/SignupPage/SignupPage"
+import ProfilePage from "../pages/ProfilePage/ProfilePage"
+import PrivateRoute from "./PrivateRoute"
 
 const AppRoutes = () => {
 
@@ -20,6 +22,11 @@ const AppRoutes = () => {
             <Route path="/battles/edit/:battle_id" element={<EditBattlePage />} />
             <Route path="/battles/delete/:battle_id" element={<BattlesPage />} />
             <Route path="/battles/create" element={<p>BATTLE CREATE</p>} />
+
+            <Route element={<PrivateRoute />}>
+                <Route path="/details/:id" element={<ProfilePage />} />
+            </Route>
+
             <Route path="*" element={<p>404</p>} />
         </Routes>
     )
