@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 import { ThemeProviderWrapper } from './contexts/theme.context'
 import { AuthProviderWrapper } from './contexts/auth.context'
+import { MessageProviderWrapper } from './contexts/message.context'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -12,10 +13,12 @@ root.render(
   <React.StrictMode>
     <AuthProviderWrapper>
       <ThemeProviderWrapper>
-        <Router>
-          <App />
-        </Router>
+        <MessageProviderWrapper>
+          <Router>
+            <App />
+          </Router>
+        </MessageProviderWrapper>
       </ThemeProviderWrapper>
     </AuthProviderWrapper>
-  </React.StrictMode>
+  </React.StrictMode >
 )

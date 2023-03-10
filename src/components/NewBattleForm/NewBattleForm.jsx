@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Button, Form, Row, Col } from "react-bootstrap"
+import { MessageContext } from "../../contexts/message.context"
 import FormError from "../FormError/FormError"
 import battlesServices from './../../services/battles.services'
 
@@ -10,6 +11,8 @@ const NewBattleForm = ({ fireFinalActions }) => {
         bookID: '',
         movieID: ''
     })
+
+    const { emitMessage } = useContext(MessageContext)
 
     const handleInputChange = e => {
         const { value, name } = e.target
@@ -23,7 +26,10 @@ const NewBattleForm = ({ fireFinalActions }) => {
 
         battlesServices
             .saveBattle(battleData)
-            .then(() => fireFinalActions())
+            .then(() => {
+                emitMessage('One more battle created!')
+                fireFinalActions()
+            })
             .catch(err => setErrors(err.response.data.errorMessages))    // visualización de errores
     }
 

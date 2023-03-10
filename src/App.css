@@ -25,7 +25,7 @@ img {
 
 .App.dark {
   background-color: #212529;
-  color: rgb(227, 227, 227);
+  color: rgb(211, 210, 210);
   min-height: 100vh;
   font-family: sans-serif;
   line-height: 1.4em;
@@ -35,14 +35,8 @@ img {
   color: #f68d25;
 }
 
-/* 
-.App.dark Button {
-  background-color: white;
-  color: #212529
-} */
-
 .App.dark .navBar {
-  border-bottom: solid 2.5px rgb(168, 166, 166);
+  border-bottom: solid 1.5px rgb(168, 166, 166);
 }
 
 .App.dark .footer {
@@ -55,7 +49,7 @@ img {
   color: white;
   border-color: rgb(168, 166, 166);
   border-radius: 0%;
-  border-width: 2px;
+  border-width: 0.5px;
 }
 
 .App.light {
@@ -68,7 +62,7 @@ img {
 }
 
 .App.light .navBar {
-  border-bottom: solid 3px #212529;
+  border-bottom: solid 2px rgb(168, 166, 166);
 }
 
 .App Button {
@@ -82,10 +76,16 @@ img {
   color: #212529;
   border-color: rgb(168, 166, 166);
   border-radius: 0%;
-  border-width: 2px;
+  border-width: 1px;
 }
 
 .small {
   font-size: 0.8em;
-  color: #40464c;
+  color: #79828c;
+}
+
+.battleName {
+  font-size: 2em;
+  line-height: 1.1em;
+  padding-bottom: 0.6em;
 }

@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap"
 import authService from "../../services/auth.services"
 import { useNavigate } from 'react-router-dom'
 import uploadServices from "../../services/upload.services"
+import { MessageContext } from "../../contexts/message.context"
 
 
 
@@ -17,6 +18,8 @@ const SignupForm = () => {
 
     const navigate = useNavigate()
 
+    const { emitMessage } = useContext(MessageContext)
+
     const handleInputChange = e => {
         const { value, name } = e.target
         setSignupData({ ...signupData, [name]: value })
@@ -30,7 +33,10 @@ const SignupForm = () => {
 
         authService
             .signup(signupData)
-            .then(() => navigate('/login'))
+            .then(() => {
+                emitMessage('You have signed up, login to start battling.')
+                navigate('/login')
+            })
             .catch(err => console.log(err))
     }
 

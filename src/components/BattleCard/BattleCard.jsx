@@ -24,7 +24,7 @@ const BattleCard = ({ name, bookID, movieID, _id, owner }) => {
             {/* <Card.Img variant="top" src={imageUrl} /> */}
             <Card.Body>
                 <Link to={`/battles/details/${_id}`}>
-                    <Card.Text> {name} </Card.Text>
+                    <Card.Text className='battleName'> {name} </Card.Text>
                 </Link>
                 <Card.Text>Book: {bookID}</Card.Text>
                 <Card.Text>Movie: {movieID}</Card.Text>
