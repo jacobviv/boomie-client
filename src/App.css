@@ -41,8 +41,8 @@ img {
   color: #212529
 } */
 
-*/ .App.dark .navBar {
-  border-bottom: solid 2px rgb(168, 166, 166);
+.App.dark .navBar {
+  border-bottom: solid 2.5px rgb(168, 166, 166);
 }
 
 .App.dark .footer {
@@ -54,6 +54,8 @@ img {
   background-color: #212529;
   color: white;
   border-color: rgb(168, 166, 166);
+  border-radius: 0%;
+  border-width: 2px;
 }
 
 .App.light {
@@ -79,6 +81,8 @@ img {
   background-color: #f8f9fa;
   color: #212529;
   border-color: rgb(168, 166, 166);
+  border-radius: 0%;
+  border-width: 2px;
 }
 
 .small {

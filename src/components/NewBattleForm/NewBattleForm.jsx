@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Button, Form, Row, Col } from "react-bootstrap"
+import FormError from "../FormError/FormError"
 import battlesServices from './../../services/battles.services'
 
 const NewBattleForm = ({ fireFinalActions }) => {
@@ -15,15 +16,15 @@ const NewBattleForm = ({ fireFinalActions }) => {
         setbattleData({ ...battleData, [name]: value })
     }
 
+    const [errors, setErrors] = useState([])
+
     const handleBattleSubmit = e => {
         e.preventDefault()
 
         battlesServices
             .saveBattle(battleData)
-            .then(({ data }) => {
-                fireFinalActions()
-            })
-            .catch(err => console.log(err))
+            .then(() => fireFinalActions())
+            .catch(err => setErrors(err.response.data.errorMessages))    // visualización de errores
     }
 
     return (
@@ -43,6 +44,7 @@ const NewBattleForm = ({ fireFinalActions }) => {
                     <Form.Control type="text" name="movieID" value={battleData.movieID} onChange={handleInputChange} />
                 </Form.Group>
             </Row>
+            {errors.length > 0 && <FormError>{errors.map(elm => <p>{elm}</p>)} </FormError>}
             <Button style={{ width: '100%' }} variant="dark mt-4" type="submit">Create Book vs Movie Battle</Button>
         </Form>
     )
