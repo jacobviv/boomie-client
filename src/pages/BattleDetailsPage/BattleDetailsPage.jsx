@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react"
-import { Container, Row, Col, Button } from "react-bootstrap"
+import { Container, Row, Col, Button, ButtonGroup } from "react-bootstrap"
 import { Link, useParams } from "react-router-dom"
 import battlesService from "../../services/battles.services"
 import { AuthContext } from '../../contexts/auth.context'
@@ -64,21 +64,19 @@ const BattleDetailsPage = ({ owner }) => {
                     <hr />
 
                     <Link to="/battles">
-                        <Button as="figure" variant="dark">Back to Battles</Button>
+                        <Button as="figure" variant="dark mt-4">Back to Battles</Button>
                     </Link>
 
-
-
                     {
-                        user && user._id === owner &&
-                        <>
+                        user && user.role === "ADMIN" &&
+                        <ButtonGroup style={{ width: '100%' }}>
                             <Link to={`/battles/edit/${battle_id}`}>
-                                <Button as="figure" variant="warning">Edit Battle</Button>
+                                <Button as="figure" variant="warning mt-4">Admin Edit Battle</Button>
                             </Link>
-                            <Button as="figure" variant="danger" onClick={handleDelete}>
-                                Delete Battle
+                            <Button as="figure" variant="danger mt-4" onClick={handleDelete}>
+                                Admin Delete Battle
                             </Button>
-                        </>
+                        </ButtonGroup>
                     }
 
                 </Col>

@@ -43,7 +43,7 @@ const NewBattleForm = ({ fireFinalActions }) => {
                     <Form.Control type="text" name="movieID" value={battleData.movieID} onChange={handleInputChange} />
                 </Form.Group>
             </Row>
-            <Button variant="dark" type="submit">Create Book vs Movie Battle</Button>
+            <Button style={{ width: '100%' }} variant="dark mt-4" type="submit">Create Book vs Movie Battle</Button>
         </Form>
     )
 }

@@ -51,11 +51,11 @@ const SignupForm = () => {
 
             <Form.Group className="mb-3" controlId="avatar">
                 <Form.Label>Avatar</Form.Label>
-                <Form.Control type="avatar" value={signupData.avatar} onChange={handleInputChange} name="avatar" />
+                <Form.Control type="file" value={signupData.avatar} onChange={handleInputChange} name="avatar" />
             </Form.Group>
 
             <div className="d-grid">
-                <Button variant="dark" type="submit">Register</Button>
+                <Button variant="dark  mt-4" type="submit">Register</Button>
             </div>
 
         </Form>

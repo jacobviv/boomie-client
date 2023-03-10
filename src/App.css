@@ -1,6 +1,6 @@
 a {
   text-decoration: none;
-  color: red;
+  color: rgb(0, 102, 255);
 }
 
 img {
@@ -25,23 +25,39 @@ img {
 
 .App.dark {
   background-color: #212529;
-  color: white;
+  color: rgb(227, 227, 227);
   min-height: 100vh;
   font-family: sans-serif;
   line-height: 1.4em;
 }
 
+.App.dark a {
+  color: #f68d25;
+}
+
+/* 
 .App.dark Button {
   background-color: white;
   color: #212529
+} */
+
+*/ .App.dark .navBar {
+  border-bottom: solid 2px rgb(168, 166, 166);
 }
 
-.App.dark .navBar {
-  border-bottom: solid 2px white;
+.App.dark .footer {
+  background-color: #212529;
+  color: rgb(168, 166, 166);
+}
+
+.App.dark .card {
+  background-color: #212529;
+  color: white;
+  border-color: rgb(168, 166, 166);
 }
 
 .App.light {
-  background-color: white;
+  background-color: #f8f9fa;
   color: #212529;
   min-height: 100vh;
   font-family: serif;
@@ -51,4 +67,21 @@ img {
 
 .App.light .navBar {
   border-bottom: solid 3px #212529;
+}
+
+.App Button {
+  background-color: #8a97a3;
+  color: white;
+  border: none;
+}
+
+.App.light .card {
+  background-color: #f8f9fa;
+  color: #212529;
+  border-color: rgb(168, 166, 166);
+}
+
+.small {
+  font-size: 0.8em;
+  color: #40464c;
 }

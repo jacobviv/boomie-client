@@ -49,7 +49,7 @@ const BattlesPage = () => {
             <Container>
                 <h1>ALL BATTLES FOUGHT TILL NOW</h1>
                 <hr />
-                {user && <Button onClick={() => setShowModal(true)} variant="dark" size='sm'>Create new</Button>}
+                {user && <Button onClick={() => setShowModal(true)} variant="warning" size='sm'>Create new</Button>}
                 <Row>
                     <Col md={{ span: 6 }}>
                         <SearchBar handleSearchBar={handleSearchBar} />

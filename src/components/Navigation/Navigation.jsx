@@ -57,7 +57,7 @@ const Navigation = () => {
                             </Link>
                         }
                         <Link>
-                            <Nav.Link as="span" onClick={switchTheme} className="d-flex">{themeText}</Nav.Link>
+                            <Nav.Link as="span" onClick={switchTheme} className="d-flex small">{themeText}</Nav.Link>
                         </Link>
                     </Nav>
                 </Navbar.Collapse>

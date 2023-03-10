@@ -74,7 +74,7 @@ const EditBattleForm = ({ fireFinalActions }) => {
             </Form.Group>
 
             <div className="d-grid ">
-                <Button type="submit" className="mx-4 mt-3">Save Changes</Button>
+                <Button type="submit" variant="warning" className="mx-4 mt-3">Save Changes</Button>
             </div>
 
         </Form>
