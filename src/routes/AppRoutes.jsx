@@ -15,13 +15,13 @@ const AppRoutes = () => {
 
         <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/profile/:id" element={<p>USER PROFILE</p>} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/battles" element={<BattlesPage />} />
             <Route path="/battles/details/:battle_id" element={<BattleDetailsPage />} />
 
             <Route element={<PrivateRoute />}>
+                <Route path="/user/details/:id" element={<ProfilePage />} />
                 <Route path="/details/:id" element={<ProfilePage />} />
                 <Route path="/battles/edit/:battle_id" element={<EditBattlePage />} />
                 <Route path="/battles/delete/:battle_id" element={<BattlesPage />} />

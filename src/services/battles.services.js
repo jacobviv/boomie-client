@@ -23,9 +23,15 @@ class BattleService {
         return this.api.get('/getAllBattles')
     }
 
+    getBattlesByUser() {
+        return this.api.get('/battlesForCurrentUser')
+    }
+
     getBattleDetails(battle_id) {
         return this.api.get(`/details/${battle_id}`)
     }
+
+    getBattlesByUser
 
     saveBattle(battleData) {
         return this.api.post('/create', battleData)

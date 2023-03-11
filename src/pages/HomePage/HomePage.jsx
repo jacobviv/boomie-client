@@ -51,8 +51,8 @@ const HomePage = () => {
                 <h1>THIS IS THE BOOMIE APP!</h1>
                 <hr />
                 <h2> Just another MERN to compare books with their screen adaptations, and viceversa.</h2 >
-                {user && <Link to="/user/details/:id">Go to your Personal Archive</Link>}
-                {!user && <Link to="/login">Login to start creating your very own Book vs Movie Battle</Link>}
+                {user && <Link to={`/details/${user._id}`}>Go to your Personal Archive</Link>}
+                {!user && <Link to="/login">Log in to start creating your very own Book vs Movie Battle</Link>}
                 <hr />
                 {
                     isLoading
