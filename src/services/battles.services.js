@@ -23,15 +23,13 @@ class BattleService {
         return this.api.get('/getAllBattles')
     }
 
-    getBattlesByUser() {
-        return this.api.get('/battlesForCurrentUser')
+    getBattlesByUser(id) {
+        return this.api.get(`/battlesForCurrentUser/${id}`)
     }
 
     getBattleDetails(battle_id) {
         return this.api.get(`/details/${battle_id}`)
     }
-
-    getBattlesByUser
 
     saveBattle(battleData) {
         return this.api.post('/create', battleData)
@@ -46,6 +44,7 @@ class BattleService {
     deleteBattleById(battle_id) {
         return this.api.delete(`/delete/${battle_id}`)
     }
+
 
 }
 

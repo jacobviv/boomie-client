@@ -19,7 +19,9 @@ const BattleDetailsPage = ({ owner }) => {
 
     const { battle_id } = useParams()
 
-    console.log(battle_id)
+    console.log(user)
+
+    // console.log(battle_id)
 
     useEffect(() => {
         battlesService
@@ -37,9 +39,9 @@ const BattleDetailsPage = ({ owner }) => {
             .catch((err) => console.error(err))
     }
 
-    useEffect(() => {
-        console.log("LA BATALLAAAAAAA", battle)
-    }, [battle])
+    // useEffect(() => {
+    //     console.log("LA BATALLAAAAAAA", battle)
+    // }, [battle])
 
 
     return (
@@ -50,6 +52,7 @@ const BattleDetailsPage = ({ owner }) => {
             <hr />
             <h2 className="mb-4">BOOK: {battle.bookID}</h2>
             <h2 className="mb-4">MOVIE: {battle.movieID}</h2>
+            <p>Fought by {battle.owner}</p>
             <hr />
             <h1> <b> BOOK WINS!!</b> </h1>
 

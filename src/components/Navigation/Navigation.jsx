@@ -52,9 +52,12 @@ const Navigation = () => {
                         {
                             user
                             &&
-                            <Link to={`/details/${user._id}`}>
-                                <Nav.Link as="span">{user.username}, you are the best!</Nav.Link>
-                            </Link>
+                            <>
+                                <Link to={`/details/${user._id}`}>
+                                    <Nav.Link as="span">{user.username}, you are the best!</Nav.Link>
+                                </Link>
+                                {/* <img src={user.avatar} alt="" /> */}
+                            </>
                         }
                         <Link>
                             <Nav.Link as="span" onClick={switchTheme} className="d-flex small">{themeText}</Nav.Link>

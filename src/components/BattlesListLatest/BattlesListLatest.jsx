@@ -1,14 +1,14 @@
 import BattleCard from "../BattleCard/BattleCard"
 import { Col, Row } from "react-bootstrap"
 
-const BattlesList = ({ battles }) => {
+const BattlesListLatest = ({ battles }) => {
 
-    // console.log("QUIENES SON LAS BATTLES", battles)
+    const lastFourBattles = battles.slice(-4)
 
     return (
         <Row>
             {
-                battles.map(elm => {
+                lastFourBattles.map(elm => {
                     return (
                         <Col md={{ span: 3 }} key={elm._id}>
                             <BattleCard {...elm} />
@@ -20,4 +20,4 @@ const BattlesList = ({ battles }) => {
     )
 }
 
-export default BattlesList
+export default BattlesListLatest

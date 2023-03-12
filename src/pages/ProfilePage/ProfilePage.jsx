@@ -13,11 +13,13 @@ const ProfilePage = () => {
 
     const { user } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(true)
-    const [battles, setBattles] = useState([])  // array vacío para que el mapeado encuentre algo de inicio
+    const [battles, setBattles] = useState([])
     const [battlesBackUp, setBattlesBackUp] = useState('')
 
+    console.log(user)
 
-    useEffect(() => {  // hook con callback y fase del efecto (montaje en este caso)
+
+    useEffect(() => {
         loadBattles()
     }, [])
 
@@ -31,6 +33,7 @@ const ProfilePage = () => {
             })
             .catch(err => console.log(err))
     }
+
 
     return (
         <Container>

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { Container, Modal, Button, Col, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
-import BattlesList from "../../components/BattlesList/BattlesList"
+import BattlesListLatest from "../../components/BattlesListLatest/BattlesListLatest"
 import Loader from "../../components/Loader/Loader"
 import NewBattleForm from "../../components/NewBattleForm/NewBattleForm"
 import { AuthContext } from "../../contexts/auth.context"
@@ -54,13 +54,16 @@ const HomePage = () => {
                 {user && <Link to={`/details/${user._id}`}>Go to your Personal Archive</Link>}
                 {!user && <Link to="/login">Log in to start creating your very own Book vs Movie Battle</Link>}
                 <hr />
+                <h3>These are the latest Book vs. Movie Battles fought:</h3>
+                <hr />
                 {
                     isLoading
                         ?
                         <Loader />
                         :
                         <>
-                            <BattlesList battles={battles} />
+                            <BattlesListLatest battles={battles} />
+                            <hr />
                         </>
                 }
             </Container>

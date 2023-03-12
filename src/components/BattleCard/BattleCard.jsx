@@ -28,6 +28,7 @@ const BattleCard = ({ name, bookID, movieID, _id, owner }) => {
                 </Link>
                 <Card.Text>Book: {bookID}</Card.Text>
                 <Card.Text>Movie: {movieID}</Card.Text>
+                <Card.Text>Fought by: {owner}</Card.Text>
 
                 {/* <Link to={`/battles/edit/${_id}`}>
                     <Card.Text>EDIT</Card.Text>
