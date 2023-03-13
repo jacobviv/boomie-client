@@ -6,7 +6,6 @@ import { Form } from "react-bootstrap"
 const SearchBar = ({ handleSearchBar }) => {
 
     // const { themeValue } = useContext(ThemeContext)
-    const [currentText, setText] = useState()
 
     return (
 
@@ -14,7 +13,7 @@ const SearchBar = ({ handleSearchBar }) => {
             <Form.Control
                 // className={`${themeValue} secondary me-2`}
                 onChange={handleSearchBar}
-                value={currentText}
+                // value={currentText} handled internally
                 type="search"
                 placeholder="Search Battle"
                 aria-label="Search"

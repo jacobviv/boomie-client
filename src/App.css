@@ -13,6 +13,10 @@ img {
   padding-bottom: 20px;
 }
 
+.navBar img {
+  width: 25px;
+}
+
 .navBar a {
   font-size: 1.2em;
 }

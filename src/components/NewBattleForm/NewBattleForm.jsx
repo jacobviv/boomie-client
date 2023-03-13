@@ -1,15 +1,28 @@
-import { useContext, useState } from "react"
-import { Button, Form, Row, Col } from "react-bootstrap"
+import { useContext, useEffect, useState } from "react"
+import { Button, Form, Row, Col, ListGroup } from "react-bootstrap"
 import { MessageContext } from "../../contexts/message.context"
-import FormError from "../FormError/FormError"
+// import FormError from "../FormError/FormError"
 import battlesServices from './../../services/battles.services'
+import { Selector, cleanKey } from './BookSelector'
+import booksServices from '../../services/books.services'
 
-const NewBattleForm = ({ fireFinalActions }) => {
+
+const NewBattleForm = ({ fireFinalActions = () => null }) => {
 
     const [battleData, setbattleData] = useState({
         name: '',
         bookID: '',
         movieID: ''
+    })
+
+    const [bookState, setbookState] = useState({
+        author_name: '',
+        ratings_average: 0,
+        title: '',
+        first_publish_date: 0,
+        excerpt: '',
+        key: '',
+        saved: false
     })
 
     const { emitMessage } = useContext(MessageContext)
@@ -19,18 +32,27 @@ const NewBattleForm = ({ fireFinalActions }) => {
         setbattleData({ ...battleData, [name]: value })
     }
 
-    const [errors, setErrors] = useState([])
-
     const handleBattleSubmit = e => {
         e.preventDefault()
+        if (!bookState.key) return
+        const bookID = cleanKey(bookState.key)
+        // ONLY SAVE BOOK IF BOOK NOT THERE
+        booksServices.detailsByKey(bookID).then(({ data }) => {
+            if (!data) {
+                booksServices
+                    .saveBook(bookState)
+                    .then(res => console.log(res))
+                    .catch(err => console.error(err))
+            }
+        })
 
         battlesServices
-            .saveBattle(battleData)
+            .saveBattle({ ...battleData, bookID })
             .then(() => {
                 emitMessage('One more battle created!')
                 fireFinalActions()
             })
-            .catch(err => setErrors(err.response.data.errorMessages))    // visualización de errores
+            .catch(err => console.error(err))
     }
 
     return (
@@ -40,17 +62,16 @@ const NewBattleForm = ({ fireFinalActions }) => {
                 <Form.Control type="text" name="name" value={battleData.name} onChange={handleInputChange} />
             </Form.Group>
             <Row className="mb-3">
-                <Form.Group as={Col} controlId="bookID">
-                    <Form.Label>Book Name</Form.Label>
-                    <Form.Control type="text" name="bookID" value={battleData.bookID} onChange={handleInputChange} />
-                </Form.Group>
 
-                <Form.Group as={Col} controlId="movieID">
+                <Selector onChange={setbookState} />
+
+                <Selector onChange={setbookState} />
+
+                {/* <Form.Group as={Col} controlId="movieID">
                     <Form.Label>Movie Name</Form.Label>
                     <Form.Control type="text" name="movieID" value={battleData.movieID} onChange={handleInputChange} />
-                </Form.Group>
+                </Form.Group> */}
             </Row>
-            {errors.length > 0 && <FormError>{errors.map(elm => <p>{elm}</p>)} </FormError>}
             <Button style={{ width: '100%' }} variant="dark mt-4" type="submit">Create Book vs Movie Battle</Button>
         </Form>
     )

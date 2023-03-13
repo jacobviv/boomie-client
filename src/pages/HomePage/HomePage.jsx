@@ -33,11 +33,6 @@ const HomePage = () => {
             .catch(err => console.log(err))
     }
 
-    const handleSearchBar = e => {
-        const filteredBattles = battlesBackUp.filter(elm => elm.name.toLowerCase().includes(e.target.value.toLowerCase()))
-        setBattles(filteredBattles)
-    }
-
     const fireFinalActions = () => {
         setShowModal(false)
         loadBattles()

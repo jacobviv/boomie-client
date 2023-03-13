@@ -11,7 +11,7 @@ const Navigation = () => {
     const { user, logout } = useContext(AuthContext)
 
     const navbarStyle = themeValue === 'dark' ? 'dark' : 'light'
-    const themeText = themeValue === 'light' ? 'Movie Mode' : 'Book Mode'
+    const themeText = themeValue === 'light' ? 'M' : 'B'
 
     return (
         <Navbar bg={navbarStyle} variant={navbarStyle} expand="lg" className='navBar mb-4' >
@@ -56,12 +56,20 @@ const Navigation = () => {
                                 <Link to={`/details/${user._id}`}>
                                     <Nav.Link as="span">{user.username}, you are the best!</Nav.Link>
                                 </Link>
-                                {/* <img src={user.avatar} alt="" /> */}
+                                <Link>
+                                    <Nav.Link as="span" onClick={switchTheme} className="d-flex small">
+                                        <img src={user.avatar} alt={user.username} />
+                                    </Nav.Link>
+                                </Link>
                             </>
                         }
-                        <Link>
-                            <Nav.Link as="span" onClick={switchTheme} className="d-flex small">{themeText}</Nav.Link>
-                        </Link>
+                        {
+                            !user
+                            &&
+                            <Link>
+                                <Nav.Link as="span" onClick={switchTheme} className="d-flex small">{themeText}</Nav.Link>
+                            </Link>
+                        }
                     </Nav>
                 </Navbar.Collapse>
             </Container>
