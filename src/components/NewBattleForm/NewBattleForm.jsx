@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import { Button, Form, Row } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../../contexts/auth.context"
+
 import { MessageContext } from "../../contexts/message.context"
 // import FormError from "../FormError/FormError"
 import battlesServices from './../../services/battles.services'
@@ -11,6 +13,9 @@ import moviesServices from '../../services/movies.services'
 
 
 const NewBattleForm = ({ fireFinalActions = () => null }) => {
+
+
+    const { refreshToken } = useContext(AuthContext)
 
     const [battleData, setBattleData] = useState({
         name: '',
@@ -86,6 +91,7 @@ const NewBattleForm = ({ fireFinalActions = () => null }) => {
                 console.log({ data })
                 emitMessage('One more battle created!')
                 setBattleData({ ...battleData, _id: data._id })
+                refreshToken()
             })
             .catch(err => console.error(err))
     }

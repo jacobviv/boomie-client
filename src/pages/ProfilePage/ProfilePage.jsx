@@ -21,7 +21,7 @@ const ProfilePage = () => {
 
     useEffect(() => {
         loadBattles()
-    }, [])
+    }, [user])
 
     const loadBattles = () => {
         battlesService

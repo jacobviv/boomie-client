@@ -39,16 +39,12 @@ const BattleDetailsPage = ({ owner }) => {
             .catch((err) => console.error(err))
     }
 
-    // useEffect(() => {
-    //     console.log("LA BATALLAAAAAAA", battle)
-    // }, [battle])
-
 
     return (
 
         <Container>
 
-            <h1 className="mb-4">DETAILS FOR: {battle.name}</h1>
+            <h1 className="mb-4">{battle.name}</h1>
             <hr />
             <h2 className="mb-4">BOOK: {battle.bookID}</h2>
             <h2 className="mb-4">MOVIE: {battle.movieID}</h2>
