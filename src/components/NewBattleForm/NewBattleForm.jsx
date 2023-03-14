@@ -1,21 +1,24 @@
 import { useContext, useEffect, useState } from "react"
-import { Button, Form, Row, Col, ListGroup } from "react-bootstrap"
+import { Button, Form, Row } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 import { MessageContext } from "../../contexts/message.context"
 // import FormError from "../FormError/FormError"
 import battlesServices from './../../services/battles.services'
-import { Selector, cleanKey } from './BookSelector'
+import BookSelector from './../BookSelector/BookSelector'
+import MovieSelector from './../MovieSelector/MovieSelector'
 import booksServices from '../../services/books.services'
+import moviesServices from '../../services/movies.services'
 
 
 const NewBattleForm = ({ fireFinalActions = () => null }) => {
 
-    const [battleData, setbattleData] = useState({
+    const [battleData, setBattleData] = useState({
         name: '',
         bookID: '',
         movieID: ''
     })
 
-    const [bookState, setbookState] = useState({
+    const [bookState, setBookState] = useState({
         author_name: '',
         ratings_average: 0,
         title: '',
@@ -25,56 +28,92 @@ const NewBattleForm = ({ fireFinalActions = () => null }) => {
         saved: false
     })
 
-    const { emitMessage } = useContext(MessageContext)
+    const [movieState, setMovieState] = useState({
+        director: '',
+        vote_average: 0,
+        title: '',
+        release_date: '',
+        overview: '',
+        id: '',
+        saved: false
+    })
 
-    const handleInputChange = e => {
-        const { value, name } = e.target
-        setbattleData({ ...battleData, [name]: value })
-    }
+    const { emitMessage } = useContext(MessageContext)
+    const navigate = useNavigate()
+
+    const cleanKey = k => k.replace('/works/', '')
 
     const handleBattleSubmit = e => {
         e.preventDefault()
         if (!bookState.key) return
+        if (!movieState.id) return
         const bookID = cleanKey(bookState.key)
-        // ONLY SAVE BOOK IF BOOK NOT THERE
-        booksServices.detailsByKey(bookID).then(({ data }) => {
-            if (!data) {
-                booksServices
-                    .saveBook(bookState)
-                    .then(res => console.log(res))
-                    .catch(err => console.error(err))
-            }
-        })
+        const movieID = (movieState.id)
+
+        booksServices
+            .detailsByKey(bookID)
+            .then(({ data }) => {
+                // WILL ONLY SAVE BOOK IF BOOK NOT THERE
+                if (!data) {
+                    booksServices
+                        .saveBook(bookState)
+                        .then(res => console.log(res))
+                        .catch(err => console.error(err))
+                }
+            })
+            .catch(err => console.error(err))
+
+        moviesServices
+            .detailsByKey(movieID)
+            .then(({ data }) => {
+                // WILL ONLY SAVE MOVIE IF MOVIE NOT THERE
+                if (!data) {
+                    moviesServices
+                        .saveMovie(movieState)
+                        .then(res => console.log(res))
+                        .catch(err => console.error(err))
+                }
+            })
+            .catch(err => console.error(err))
+
+        // Generate Battle Name based on selected book and movie
+        const battleName = `${bookState.title} VS ${movieState.title}`
+        const saveData = { ...battleData, bookID, movieID, name: battleName }
 
         battlesServices
-            .saveBattle({ ...battleData, bookID })
-            .then(() => {
+            .saveBattle(saveData)
+            .then(({ data }) => {
+                console.log({ data })
                 emitMessage('One more battle created!')
-                fireFinalActions()
+                setBattleData({ ...battleData, _id: data._id })
             })
             .catch(err => console.error(err))
     }
 
+    useEffect(() => {
+        if (battleData._id) {
+            navigate(`/details/${battleData._id}`)
+        }
+    }, [battleData._id, navigate])
+
     return (
         <Form onSubmit={handleBattleSubmit}>
-            <Form.Group className="mb-3" controlId="title">
-                <Form.Label>Name</Form.Label>
-                <Form.Control type="text" name="name" value={battleData.name} onChange={handleInputChange} />
-            </Form.Group>
             <Row className="mb-3">
-
-                <Selector onChange={setbookState} />
-
-                <Selector onChange={setbookState} />
-
-                {/* <Form.Group as={Col} controlId="movieID">
-                    <Form.Label>Movie Name</Form.Label>
-                    <Form.Control type="text" name="movieID" value={battleData.movieID} onChange={handleInputChange} />
-                </Form.Group> */}
+                <BookSelector onChange={setBookState} />
+                <MovieSelector onChange={setMovieState} />
             </Row>
-            <Button style={{ width: '100%' }} variant="dark mt-4" type="submit">Create Book vs Movie Battle</Button>
+            {/* <Button style={{ width: '100%' }} variant="dark mt-4" type="submit">Create Book vs Movie Battle</Button> */}
+            <Button style={{ width: '100%', padding: '30px' }} variant="dark mt-4" type="submit">
+                Create Book vs Movie Battle
+                {bookState.title && movieState.title && (
+                    <div className="mt-3">
+                        {bookState.title} VS {movieState.title}
+                    </div>
+                )}
+            </Button>
         </Form>
     )
+
 }
 
 export default NewBattleForm

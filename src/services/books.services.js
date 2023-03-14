@@ -30,6 +30,7 @@ class BookService {
     saveBook(bookData) {
         return this.api.post(`/saveBook/`, bookData)
     }
+
     detailsByKey(bookKey) {
         return this.api.get(`/detailsByKey/${bookKey}`)
     }

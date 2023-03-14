@@ -17,6 +17,11 @@ img {
   width: 25px;
 }
 
+.navBar img:hover {
+  transform: scale(2);
+  filter: grayscale(0%);
+}
+
 .navBar a {
   font-size: 1.2em;
 }
@@ -60,7 +65,7 @@ img {
   background-color: #f8f9fa;
   color: #212529;
   min-height: 100vh;
-  font-family: serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 1.1em;
   line-height: 1.3em;
 }
@@ -92,4 +97,8 @@ img {
   font-size: 2em;
   line-height: 1.1em;
   padding-bottom: 0.6em;
+}
+
+.card:hover {
+  transform: scale(1.015);
 }
