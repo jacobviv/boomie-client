@@ -1,12 +1,19 @@
 import { useEffect, useState, useContext } from "react"
-import { Container, Row, Col, Button, ButtonGroup } from "react-bootstrap"
+import { Container, Row, Col, Button, ButtonGroup, Card } from "react-bootstrap"
 import { Link, useParams } from "react-router-dom"
 import battlesService from "../../services/battles.services"
 import { AuthContext } from '../../contexts/auth.context'
+import booksService from '../../services/books.services'
+import moviesService from '../../services/movies.services'
+import usersService from '../../services/users.services'
 
 
 
 const BattleDetailsPage = ({ owner }) => {
+
+    const [book, setBook] = useState({})
+    const [movie, setMovie] = useState({})
+    const [battleOwner, setBattleOwner] = useState({})
 
     const [battle, setBattle] = useState({
         _id: '',
@@ -15,13 +22,12 @@ const BattleDetailsPage = ({ owner }) => {
         movieID: '',
         owner: ''
     })
+
     const { user } = useContext(AuthContext)
 
     const { battle_id } = useParams()
 
-    console.log(user)
-
-    // console.log(battle_id)
+    console.log(battle_id)
 
     useEffect(() => {
         battlesService
@@ -29,6 +35,30 @@ const BattleDetailsPage = ({ owner }) => {
             .then(({ data }) => setBattle(data))
             .catch(err => console.error(err))
     }, [])
+
+
+    useEffect(() => {
+        loadData()
+    }, [battle])
+
+    const loadData = () => {
+
+        booksService
+            .getBookByBookID(battle.bookID)
+            .then(({ data }) => setBook(data))
+            .catch(err => console.log(err))
+
+        moviesService
+            .getMovieByMovieID(battle.movieID)
+            .then(({ data }) => setMovie(data))
+            .catch(err => console.log(err))
+
+        usersService
+            .getUserById(battle.owner)
+            .then(({ data }) => setBattleOwner(data))
+            .catch(err => console.log(err))
+
+    }
 
     const handleDelete = () => {
         battlesService
@@ -39,6 +69,11 @@ const BattleDetailsPage = ({ owner }) => {
             .catch((err) => console.error(err))
     }
 
+    useEffect(() => {
+        console.log("LA BATALLAAAAAAA", battle)
+        console.log(book)
+    }, [battle])
+
 
     return (
 
@@ -46,19 +81,30 @@ const BattleDetailsPage = ({ owner }) => {
 
             <h1 className="mb-4">{battle.name}</h1>
             <hr />
-            <h2 className="mb-4">BOOK: {battle.bookID}</h2>
-            <h2 className="mb-4">MOVIE: {battle.movieID}</h2>
-            <p>Fought by {battle.owner}</p>
+            <h2 className="mb-4">BOOK: {book.bookTitle}</h2>
+            <p>{book.bookRating}</p>
+            <h2 className="mb-4">MOVIE: {movie.movieTitle}</h2>
+            <p>{movie.movieRating}</p>
             <hr />
-            <h1> <b> BOOK WINS!!</b> </h1>
+            {
+                book.bookRating > movie.movieRating &&
+                <h1> <b>BOOK WINS</b> </h1>
+            }
+            {
+                book.bookRating < movie.movieRating &&
+                <h1> <b>MOVIE WINS</b> </h1>
+            }
+            <hr />
 
             <Row>
 
                 <Col md={{ span: 12, offset: 0 }}>
                     <h3>Specs</h3>
                     <ul>
-                        <li>Book: {battle.bookID}</li>
-                        <li>Movie: {battle.movieID}</li>
+                        <li>Book: {book.bookTitle}</li>
+                        <li>Movie: {movie.movieTitle}</li>
+                        <li>Fought by: {battleOwner.username}</li>
+
                     </ul>
                     <hr />
 

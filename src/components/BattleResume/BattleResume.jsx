@@ -3,28 +3,29 @@ import booksService from "../../services/books.services"
 import moviesService from "../../services/movies.services"
 
 const BattleResume = () => {
-    // const [bookTotalRating, setBookTotalRating] = useState(0)
-    // const [movieTotalRating, setMovieTotalRating] = useState(0)
+
     const [bookRatingSum, setBookRatingSum] = useState(0)
     const [movieRatingSum, setMovieRatingSum] = useState(0)
 
-    // useEffect(() => {
-    //     sumBooks()
-    //     sumMovies()
-    // }, [])
+    useEffect(() => {
+        sumBooks()
+        sumMovies()
+    }, [])
+
+    useEffect(() => {
+        console.log("EL RATING TOTAL =>", bookRatingSum)
+    }, [bookRatingSum])
 
     const sumBooks = () => {
 
         booksService
             .getBooks()
-            .then((books) => {
-                console.log(books)
+            .then(({ data: books }) => {
+                let booksRatingTotal = 0
                 books.forEach((book) => {
-                    bookRatingSum += book.bookRating
+                    booksRatingTotal += book.bookRating
                 })
-                setBookRatingSum(bookRatingSum)
-                // setBookTotalRating(bookRatingSum)
-
+                setBookRatingSum(booksRatingTotal)
             })
             .catch((err) => console.log(err))
     }
@@ -33,14 +34,12 @@ const BattleResume = () => {
 
         moviesService
             .getMovies()
-            .then((movies) => {
-
+            .then(({ data: movies }) => {
+                let moviesRatingTotal = 0
                 movies.forEach((movie) => {
-                    movieRatingSum += movie.movieRating
+                    moviesRatingTotal += movie.movieRating
                 })
-                setMovieRatingSum(movieRatingSum)
-                // setMovieTotalRating(movieRatingSum)
-
+                setMovieRatingSum(moviesRatingTotal)
             })
             .catch((err) => console.log(err))
     }
