@@ -27,7 +27,7 @@ const BattleDetailsPage = ({ owner }) => {
 
     const { battle_id } = useParams()
 
-    console.log(battle_id)
+    // console.log(battle_id)
 
     useEffect(() => {
         battlesService
@@ -35,7 +35,6 @@ const BattleDetailsPage = ({ owner }) => {
             .then(({ data }) => setBattle(data))
             .catch(err => console.error(err))
     }, [])
-
 
     useEffect(() => {
         loadData()
@@ -69,43 +68,80 @@ const BattleDetailsPage = ({ owner }) => {
             .catch((err) => console.error(err))
     }
 
-    useEffect(() => {
-        console.log("LA BATALLAAAAAAA", battle)
-        console.log(book)
-    }, [battle])
+    // useEffect(() => {
+    //     console.log("LA BATALLAAAAAAA", battle)
+    //     console.log(book)
+    // }, [battle])
 
 
     return (
 
         <Container>
 
-            <h1 className="mb-4">{battle.name}</h1>
-            <hr />
-            <h2 className="mb-4">BOOK: {book.bookTitle}</h2>
-            <p>{book.bookRating}</p>
-            <h2 className="mb-4">MOVIE: {movie.movieTitle}</h2>
-            <p>{movie.movieRating}</p>
-            <hr />
-            {
-                book.bookRating > movie.movieRating &&
-                <h1> <b>BOOK WINS</b> </h1>
-            }
-            {
-                book.bookRating < movie.movieRating &&
-                <h1> <b>MOVIE WINS</b> </h1>
-            }
-            <hr />
+            <Row>
+                <Col md={{ span: 12, offset: 0 }}>
+
+                    <h1 className="mb-4">{battle.name}</h1>
+                    <hr />
+                    {
+                        book.bookRating > movie.movieRating &&
+                        <h1><i><b>BOOK APPEARS TO BE BETTER</b></i></h1>
+                    }
+                    {
+                        book.bookRating < movie.movieRating &&
+                        <h1><i><b>The movie is supposedly better.</b></i></h1>
+                    }
+
+                </Col>
+            </Row>
 
             <Row>
+                <Col md={{ span: 6, offset: 0 }}>
 
+                    <hr />
+                    <p>Book:</p>
+                    <h2 className="mb-4"> <i>{book.bookTitle}</i> </h2>
+                    <h3>Writen by {book.bookAuthor}</h3>
+                    <hr />
+                    <p>First published in {book.bookPublishingDate}</p>
+                    <p>Open Library Rating: {book.bookRating}</p>
+
+                </Col>
+
+                <Col md={{ span: 6, offset: 0 }}>
+
+                    <hr />
+                    <p>Movie:</p>
+                    <h2 className="mb-4"> <i>{movie.movieTitle}</i> </h2>
+                    <h3>Directed by {movie.movieDirector}</h3>
+                    <hr />
+                    <p>First released in {movie.movieReleaseDate}</p>
+                    <p>The Movie Database Rating: {movie.movieRating}</p>
+
+                </Col>
+            </Row>
+
+            <Row>
                 <Col md={{ span: 12, offset: 0 }}>
-                    <h3>Specs</h3>
-                    <ul>
-                        <li>Book: {book.bookTitle}</li>
-                        <li>Movie: {movie.movieTitle}</li>
-                        <li>Fought by: {battleOwner.username}</li>
+                    <hr />
+                    <h4>Movie Overview</h4>
+                    <p> <i>"{movie.movieOverview}"</i> </p>
+                    <hr />
+                    {
+                        book.bookFirstSentence && book.bookFirstSentence.length !== 0 &&
+                        <>
+                            <hr />
+                            <h4>Book First Sentence</h4>
+                            <p>{book.bookFirstSentence}</p>
+                        </>
+                    }
+                </Col>
+            </Row>
 
-                    </ul>
+            <Row>
+                <Col md={{ span: 6, offset: 0 }}>
+
+                    <p>Battle fought by {battleOwner.username}</p>
                     <hr />
 
                     <Link to="/battles">
@@ -124,10 +160,6 @@ const BattleDetailsPage = ({ owner }) => {
                         </ButtonGroup>
                     }
 
-                </Col>
-
-                <Col md={{ span: 4 }}>
-                    <img src={battle.imageUrl} style={{ width: '100%' }} />
                 </Col>
 
             </Row>
