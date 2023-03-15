@@ -21,7 +21,6 @@ const AppRoutes = () => {
             <Route path="/battles/details/:battle_id" element={<BattleDetailsPage />} />
 
             <Route element={<PrivateRoute />}>
-                <Route path="/user/details/:id" element={<ProfilePage />} />
                 <Route path="/details/:id" element={<ProfilePage />} />
                 <Route path="/battles/edit/:battle_id" element={<EditBattlePage />} />
                 <Route path="/battles/delete/:battle_id" element={<BattlesPage />} />

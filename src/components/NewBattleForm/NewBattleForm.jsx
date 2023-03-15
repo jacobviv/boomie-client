@@ -10,10 +10,11 @@ import BookSelector from './../BookSelector/BookSelector'
 import MovieSelector from './../MovieSelector/MovieSelector'
 import booksServices from '../../services/books.services'
 import moviesServices from '../../services/movies.services'
+import { cleanKey } from "../../utils/stringsUtils"
+import battlesService from "./../../services/battles.services"
 
 
-const NewBattleForm = ({ fireFinalActions = () => null }) => {
-
+const NewBattleForm = () => {
 
     const { refreshToken } = useContext(AuthContext)
 
@@ -46,62 +47,88 @@ const NewBattleForm = ({ fireFinalActions = () => null }) => {
     const { emitMessage } = useContext(MessageContext)
     const navigate = useNavigate()
 
-    const cleanKey = k => k.replace('/works/', '')
 
     const handleBattleSubmit = e => {
+
         e.preventDefault()
         if (!bookState.key) return
         if (!movieState.id) return
         const bookID = cleanKey(bookState.key)
-        const movieID = (movieState.id)
+        const movieID = movieState.id
+        console.log({ bookID }, { movieID })
 
-        booksServices
-            .detailsByKey(bookID)
-            .then(({ data }) => {
-                console.log(data)
-                // WILL ONLY SAVE BOOK IF BOOK NOT THERE
-                if (!data) {
+        const promises = [booksServices.detailsByKey(bookID), moviesServices.detailsByKey(movieID)]
+
+        Promise
+            .all(promises)
+            .then(([bookData, movieData]) => {
+
+                console.log('BOOK DATA', bookData)
+                console.log('MOVIE DATA', movieData)
+
+                if (!bookData.data) {
+                    console.log('NO HABIA DATA EN BOOK')
                     booksServices
                         .saveBook(bookState)
                         .then(res => console.log(res))
                         .catch(err => console.error(err))
                 }
-            })
-            .catch(err => console.error(err))
-
-        moviesServices
-            .detailsByKey(movieID)
-            .then(({ data }) => {
-                // WILL ONLY SAVE MOVIE IF MOVIE NOT THERE
-                if (!data) {
+                if (!movieData.data) {
+                    console.log('NO HABIA DATA EN MOVIE')
                     moviesServices
                         .saveMovie(movieState)
                         .then(res => console.log(res))
                         .catch(err => console.error(err))
                 }
             })
-            .catch(err => console.error(err))
+            .then(() => {
+                const battleName = `${bookState.title} VS ${movieState.title}`
+                const saveData = { ...battleData, bookID, movieID, name: battleName }
 
-        // Generate Battle Name based on selected book and movie
-        const battleName = `${bookState.title} VS ${movieState.title}`
-        const saveData = { ...battleData, bookID, movieID, name: battleName }
+                console.log('CREANDO BATALLA:', saveData)
 
-        battlesServices
-            .saveBattle(saveData)
-            .then(({ data }) => {
-                console.log({ data })
-                emitMessage('One more battle created!')
-                setBattleData({ ...battleData, _id: data._id })
-                refreshToken()
+                battlesService
+                    .getBattles()
+                    .then(({ data }) => {
+                        const sameBookID = data.some(elm => elm.bookID === bookID)
+                        const sameMovieID = data.some(elm => Number(elm.movieID) === movieID)
+                        if (sameBookID === true && sameMovieID === true) {
+                            emitMessage('This battle already exists! Try another one.')
+                            console.log('no se puede cerar chavaalllll')
+                        } else {
+                            battlesServices
+                                .saveBattle(saveData)
+                                .then(({ data }) => {
+                                    console.log('BATALLA CREADA', data)
+                                    emitMessage('One more battle created!')
+                                    setBattleData({ ...battleData, _id: data._id })
+                                    refreshToken()
+                                })
+                        }
+
+                    })
+                    .catch(err => console.log(err))
+
+                // battlesServices
+                //     .saveBattle(saveData)
+                //     .then(({ data }) => {
+                //         console.log('BATALLA CREADA', data)
+                //         emitMessage('One more battle created!')
+                //         setBattleData({ ...battleData, _id: data._id })
+                //         refreshToken()
+                //     })
+                //     .catch(err => console.error(err))
+
             })
             .catch(err => console.error(err))
+
     }
 
     useEffect(() => {
         if (battleData._id) {
             navigate(`/details/${battleData._id}`)
         }
-    }, [battleData._id, navigate])
+    }, [battleData._id])
 
     return (
         <Form onSubmit={handleBattleSubmit}>
@@ -111,7 +138,7 @@ const NewBattleForm = ({ fireFinalActions = () => null }) => {
             </Row>
             {/* <Button style={{ width: '100%' }} variant="dark mt-4" type="submit">Create Book vs Movie Battle</Button> */}
             <Button style={{ width: '100%', padding: '30px' }} variant="dark mt-4" type="submit">
-                Create Book vs Movie Battle
+                Save Book vs Movie Battle
                 {bookState.title && movieState.title && (
                     <div className="mt-3">
                         {bookState.title} VS {movieState.title}

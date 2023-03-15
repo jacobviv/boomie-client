@@ -44,8 +44,10 @@ const BattleResume = () => {
             .catch((err) => console.log(err))
     }
 
-    const winner = bookRatingSum > movieRatingSum ? "BOOKS ARE WINNING!" : "MOVIES ARE WINNING!";
+    const winner = bookRatingSum > movieRatingSum ? "BOOKS ARE WINNING!" : "MOVIES ARE WINNING!"
+
     console.log('bookTotalRating--------', bookRatingSum)
+
     return (
         <div>
             <h2>Battle Resume</h2>

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { Col, Container, Row } from "react-bootstrap"
 import { Navigate, useParams } from "react-router-dom"
 import EditBattleForm from "../../components/EditBattleForm/EditBattleForm"
-import Loader from "../../components/Loader/Loader"
+import NewBattleForm from "../../components/NewBattleForm/NewBattleForm"
 import { AuthContext } from "../../contexts/auth.context"
 import battlesService from "../../services/battles.services"
 
@@ -10,7 +10,7 @@ const EditBattlePage = () => {
 
     const { battle_id } = useParams()
 
-    const { user, isLoading } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
 
     const [battle, setBattle] = useState({})
 
@@ -27,11 +27,6 @@ const EditBattlePage = () => {
             })
             .catch(err => console.log(err))
     }
-    console.log(battle_id)
-
-    if (isLoading) {
-        return <Loader />
-    }
 
     if (user?._id === battle.owner?._id || user.role === "ADMIN" || user.role === "USER") {
 
@@ -41,10 +36,11 @@ const EditBattlePage = () => {
             <Container>
                 <Row>
 
-                    <Col md={{ span: 6, offset: 3 }}>
-                        <h1>Edit Battle</h1>
+                    <Col md={{ span: 8, offset: 2 }}>
+                        <h1>Edit Battle {battle.name}</h1>
                         <hr />
-                        <EditBattleForm />
+                        {/* <EditBattleForm battle={battle} /> */}
+                        <NewBattleForm />
                     </Col>
                 </Row>
             </Container>

@@ -6,7 +6,7 @@ import './ProfileCard.css'
 
 
 
-const ProfileCard = ({ user }) => {
+const ProfileCard = ({ username, email, battles, avatar }) => {
 
     return (
 
@@ -14,11 +14,11 @@ const ProfileCard = ({ user }) => {
             <Row className='align-items-start'>
 
                 <Col md={{ span: 12 }}>
-                    <h1>{user.username}, this is your profile page.</h1>
+                    <h1>{username}, this is your profile page.</h1>
                     <hr />
-                    <p>The email you are using at Boomie: {user.email}</p>
+                    <p>The email you are using at Boomie: {email}</p>
                     <hr />
-                    <h2>You have fought {user.battles.length} battles.</h2>
+                    <h2>You have fought {battles.length} battles.</h2>
                     <h3>
                         <Link to="/battles/create">
                             <Nav.Link as="span">Create one now.</Nav.Link>
@@ -31,7 +31,7 @@ const ProfileCard = ({ user }) => {
             <Row className='align-items-start'>
 
                 <Col md={{ span: 2 }}>
-                    <img src={user.avatar} alt={user.username} />
+                    <img src={avatar} alt={username} />
                 </Col>
             </Row>
         </>

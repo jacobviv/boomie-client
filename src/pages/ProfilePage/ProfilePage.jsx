@@ -14,7 +14,6 @@ const ProfilePage = () => {
     const { user } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(true)
     const [battles, setBattles] = useState([])
-    const [battlesBackUp, setBattlesBackUp] = useState('')
 
 
     useEffect(() => {
@@ -26,19 +25,15 @@ const ProfilePage = () => {
             .getBattlesByUser(user._id)
             .then(({ data }) => {
                 setBattles(data)
-                setBattlesBackUp(data)
                 setIsLoading(false)
             })
             .catch(err => console.log(err))
     }
 
-    console.log(battles)
-
-
     return (
         <Container>
 
-            <ProfileCard user={user} className="mt-4" />
+            <ProfileCard {...user} className="mt-4" />
             <hr />
 
             {

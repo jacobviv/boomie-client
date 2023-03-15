@@ -45,6 +45,10 @@ class BattleService {
         return this.api.delete(`/delete/${battle_id}`)
     }
 
+    getFilteredBattlesName(query) {
+        // TODO
+        // enviar la query al servidor para recibir las battles que contienen ese texto
+    }
 
 }
 

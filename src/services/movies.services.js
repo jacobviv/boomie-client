@@ -43,6 +43,10 @@ class MovieService {
         return this.api.get(`/detailsByKey/${movieKey}`)
     }
 
+    getMoviesRatingSum() {
+        // TODO
+    }
+
 }
 
 const moviesService = new MovieService()

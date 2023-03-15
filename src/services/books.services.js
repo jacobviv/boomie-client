@@ -44,6 +44,10 @@ class BookService {
         return this.api.get(`/detailsByKey/${bookKey}`)
     }
 
+    getBooksRatingSum() {
+        // TODO
+    }
+
 }
 
 const booksService = new BookService()

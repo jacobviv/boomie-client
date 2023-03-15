@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { Container, Modal, Button, Col, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import BattleResume from "../../components/BattleResume/BattleResume"
-import BattlesListLatest from "../../components/BattlesListLatest/BattlesListLatest"
+import BattlesList from "../../components/BattlesList/BattlesList"
 import Loader from "../../components/Loader/Loader"
 import NewBattleForm from "../../components/NewBattleForm/NewBattleForm"
 import { AuthContext } from "../../contexts/auth.context"
@@ -12,7 +12,6 @@ import battlesService from "../../services/battles.services"
 const HomePage = () => {
 
     const [showModal, setShowModal] = useState(false)
-    const [battlesBackUp, setBattlesBackUp] = useState('')
 
     const [battles, setBattles] = useState([])  // array vacío para que el mapeado encuentre algo de inicio
     const [isLoading, setIsLoading] = useState(true)
@@ -28,7 +27,6 @@ const HomePage = () => {
             .getBattles()
             .then(({ data }) => {
                 setBattles(data)
-                setBattlesBackUp(data)
                 setIsLoading(false)
             })
             .catch(err => console.log(err))
@@ -60,7 +58,7 @@ const HomePage = () => {
                         <Loader />
                         :
                         <>
-                            <BattlesListLatest battles={battles} />
+                            <BattlesList battles={battles} selection={4} />
                             <hr />
                         </>
                 }

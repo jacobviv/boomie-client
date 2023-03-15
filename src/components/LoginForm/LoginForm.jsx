@@ -14,6 +14,7 @@ const LoginForm = () => {
     })
 
     const { authenticateUser, user } = useContext(AuthContext)
+
     const navigate = useNavigate()
 
     const { emitMessage } = useContext(MessageContext)

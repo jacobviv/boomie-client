@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react"
 import { Container, Row, Col, Button, ButtonGroup, Card } from "react-bootstrap"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import battlesService from "../../services/battles.services"
 import { AuthContext } from '../../contexts/auth.context'
 import booksService from '../../services/books.services'
@@ -27,6 +27,8 @@ const BattleDetailsPage = ({ owner }) => {
 
     const { battle_id } = useParams()
 
+    const navigate = useNavigate()
+
     // console.log(battle_id)
 
     useEffect(() => {
@@ -42,20 +44,36 @@ const BattleDetailsPage = ({ owner }) => {
 
     const loadData = () => {
 
-        booksService
-            .getBookByBookID(battle.bookID)
-            .then(({ data }) => setBook(data))
+        const promises = [
+            booksService.getBookByBookID(battle.bookID),
+            moviesService.getMovieByMovieID(battle.movieID),
+            usersService.getUserById(battle.owner)
+        ]
+
+        Promise
+            .all(promises)
+            .then(([bookInfo, movieInfo, userInfo]) => {
+                setBook(bookInfo.data)
+                setMovie(movieInfo.data)
+                setBattleOwner(userInfo.data)
+            })
             .catch(err => console.log(err))
 
-        moviesService
-            .getMovieByMovieID(battle.movieID)
-            .then(({ data }) => setMovie(data))
-            .catch(err => console.log(err))
 
-        usersService
-            .getUserById(battle.owner)
-            .then(({ data }) => setBattleOwner(data))
-            .catch(err => console.log(err))
+        // booksService
+        //     .getBookByBookID(battle.bookID)
+        //     .then(({ data }) => setBook(data))
+        //     .catch(err => console.log(err))
+
+        // moviesService
+        //     .getMovieByMovieID(battle.movieID)
+        //     .then(({ data }) => setMovie(data))
+        //     .catch(err => console.log(err))
+
+        // usersService
+        //     .getUserById(battle.owner)
+        //     .then(({ data }) => setBattleOwner(data))
+        //     .catch(err => console.log(err))
 
     }
 
@@ -63,7 +81,7 @@ const BattleDetailsPage = ({ owner }) => {
         battlesService
             .deleteBattleById(battle_id)
             .then(() => {
-                window.location = "/battles"
+                navigate("/battles")
             })
             .catch((err) => console.error(err))
     }
@@ -85,11 +103,11 @@ const BattleDetailsPage = ({ owner }) => {
                     <hr />
                     {
                         book.bookRating > movie.movieRating &&
-                        <h1><i><b>BOOK APPEARS TO BE BETTER</b></i></h1>
+                        <h1><i><b>The book seems to be better.</b></i></h1>
                     }
                     {
                         book.bookRating < movie.movieRating &&
-                        <h1><i><b>The movie is supposedly better.</b></i></h1>
+                        <h1><i><b>The movie is supposed to be better.</b></i></h1>
                     }
 
                 </Col>
@@ -103,7 +121,7 @@ const BattleDetailsPage = ({ owner }) => {
                     <h2 className="mb-4"> <i>{book.bookTitle}</i> </h2>
                     <h3>Writen by {book.bookAuthor}</h3>
                     <hr />
-                    <p>First published in {book.bookPublishingDate}</p>
+                    <p>Published in {book.bookPublishingDate}</p>
                     <p>Open Library Rating: {book.bookRating}</p>
 
                 </Col>

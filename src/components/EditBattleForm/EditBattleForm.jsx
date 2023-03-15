@@ -4,7 +4,7 @@ import battlesService from "../../services/battles.services"
 import { ThemeContext } from "../../contexts/theme.context"
 import { useNavigate, useParams } from "react-router-dom"
 
-const EditBattleForm = ({ fireFinalActions }) => {
+const EditBattleForm = ({ battle }) => {
 
     const { battle_id } = useParams()
     const navigate = useNavigate()
@@ -12,28 +12,10 @@ const EditBattleForm = ({ fireFinalActions }) => {
 
 
     const [battleData, setBattleData] = useState({
-        name: '',
-        bookID: '',
-        movieID: '',
+        name: battle.name,
+        bookID: battle.bookID,
+        movieID: battle.movieID,
     })
-
-    useEffect(() => {
-        getBattle()
-
-    }, [])
-
-    const getBattle = () => {
-        battlesService
-            .getBattleDetails(battle_id)
-            .then(({ data }) => {
-                setBattleData({
-                    name: data.name,
-                    bookID: data.bookID,
-                    movieID: data.movieID
-                })
-            })
-            .catch(err => console.log(err))
-    }
 
     const handleBattleChange = e => {
         const { name, value } = e.target
@@ -50,8 +32,6 @@ const EditBattleForm = ({ fireFinalActions }) => {
             })
             .catch(err => console.log(err))
     }
-
-    console.log(battleData)
 
 
     return (

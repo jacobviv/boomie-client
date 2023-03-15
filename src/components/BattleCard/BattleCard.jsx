@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { Button, ButtonGroup, Card } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/auth.context'
 import battlesService from "../../services/battles.services"
 import booksService from '../../services/books.services'
 import moviesService from '../../services/movies.services'
 import usersService from '../../services/users.services'
+import { MessageContext } from "../../contexts/message.context"
 
 
 const BattleCard = ({ name, bookID, movieID, _id, owner }) => {
@@ -15,6 +16,8 @@ const BattleCard = ({ name, bookID, movieID, _id, owner }) => {
     const [book, setBook] = useState({})
     const [movie, setMovie] = useState({})
     const [battleOwner, setBattleOwner] = useState({})
+    const { emitMessage } = useContext(MessageContext)
+    const { refreshToken } = useContext(AuthContext)
 
 
     useEffect(() => {
@@ -46,7 +49,8 @@ const BattleCard = ({ name, bookID, movieID, _id, owner }) => {
         battlesService
             .deleteBattleById(_id)
             .then(() => {
-                window.location = "/battles"
+                emitMessage('It is deleted!')
+                refreshToken()
             })
             .catch((err) => console.error(err))
     }
@@ -73,13 +77,13 @@ const BattleCard = ({ name, bookID, movieID, _id, owner }) => {
                 }
             </Card.Body>
             {
-                user && user._id === owner &&
+                user && user.role === 'ADMIN' &&
                 <>
                     <Link to={`/battles/edit/${_id}`}>
-                        <Button style={{ width: '100%' }} variant='warning mb-3' size='sm'>Owner's edit</Button>
+                        <Button style={{ width: '100%' }} variant='warning mb-3' size='sm'>Edit</Button>
                     </Link>
                     <Button as="figure" variant="danger" onClick={handleDelete} size='sm'>
-                        Owner's delete
+                        Delete
                     </Button>
                 </>
             }
