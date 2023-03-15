@@ -19,9 +19,9 @@ class UsersServices {
 
     }
 
-    // getUserById(id) {
-    //     return this.api.get(`/details/${id}`)
-    // }
+    getUserById(id) {
+        return this.api.get(`/details/${id}`)
+    }
 
     // editUserById(id, userData) {
     //     return this.api.put(`/edit/${id}`, userData)

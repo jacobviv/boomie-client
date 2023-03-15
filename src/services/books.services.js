@@ -27,6 +27,15 @@ class BookService {
         const bookKey = bookKeyRaw.replace('/works/', '')
         return this.api.get(`/api/load/${bookKey}`)
     }
+
+    getBooks() {
+        return this.api.get('/getAllBooks')
+    }
+
+    getBookByBookID(bookID) {
+        return this.api.get(`/getBookByBookID/${bookID}`)
+    }
+
     saveBook(bookData) {
         return this.api.post(`/saveBook/`, bookData)
     }

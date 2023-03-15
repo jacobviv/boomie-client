@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { Container, Modal, Button, Col, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import BattleResume from "../../components/BattleResume/BattleResume"
 import BattlesListLatest from "../../components/BattlesListLatest/BattlesListLatest"
 import Loader from "../../components/Loader/Loader"
 import NewBattleForm from "../../components/NewBattleForm/NewBattleForm"
@@ -48,6 +49,8 @@ const HomePage = () => {
                 <h2> Just another MERN to compare books with their screen adaptations, and viceversa.</h2 >
                 {user && <Link to={`/details/${user._id}`}>Go to your Personal Archive</Link>}
                 {!user && <Link to="/login">Log in to start creating your very own Book vs Movie Battle</Link>}
+                <hr />
+                <BattleResume />
                 <hr />
                 <h3>These are the latest Book vs. Movie Battles fought:</h3>
                 <hr />

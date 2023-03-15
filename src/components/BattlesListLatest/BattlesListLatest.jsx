@@ -10,7 +10,7 @@ const BattlesListLatest = ({ battles }) => {
             {
                 lastFourBattles.map(elm => {
                     return (
-                        <Col md={{ span: 3 }} key={elm._id}>
+                        <Col xs={12} sm={12} md={6} lg={4} xl={3} key={elm._id}>
                             <BattleCard {...elm} />
                         </Col>
                     )

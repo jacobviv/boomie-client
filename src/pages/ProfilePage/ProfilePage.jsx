@@ -16,8 +16,6 @@ const ProfilePage = () => {
     const [battles, setBattles] = useState([])
     const [battlesBackUp, setBattlesBackUp] = useState('')
 
-    console.log(user)
-
 
     useEffect(() => {
         loadBattles()
@@ -33,6 +31,8 @@ const ProfilePage = () => {
             })
             .catch(err => console.log(err))
     }
+
+    console.log(battles)
 
 
     return (

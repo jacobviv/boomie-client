@@ -58,6 +58,7 @@ const NewBattleForm = ({ fireFinalActions = () => null }) => {
         booksServices
             .detailsByKey(bookID)
             .then(({ data }) => {
+                console.log(data)
                 // WILL ONLY SAVE BOOK IF BOOK NOT THERE
                 if (!data) {
                     booksServices

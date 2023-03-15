@@ -27,6 +27,10 @@ class MovieService {
         return this.api.get(`/api/load/${movieKey}`)
     }
 
+    getMovieByMovieID(movieID) {
+        return this.api.get(`/getMovieByMovieID/${movieID}`)
+    }
+
     saveMovie(movieData) {
         return this.api.post(`/saveMovie/`, movieData)
     }

@@ -8,8 +8,6 @@ import './ProfileCard.css'
 
 const ProfileCard = ({ user }) => {
 
-    console.log(user)
-
     return (
 
         <>
