@@ -1,60 +1,51 @@
 import React, { useState, useEffect } from "react"
-import booksService from "../../services/books.services"
-import moviesService from "../../services/movies.services"
+import Chart from "chart.js/auto"
+import { Col } from "react-bootstrap"
+import Loader from "../../components/Loader/Loader"
+import battlesService from "../../services/battles.services"
+import ChartDoughnut from "../ChartDoughnut/ChartDoughnut"
+
+
 
 const BattleResume = () => {
 
-    const [bookRatingSum, setBookRatingSum] = useState(0)
-    const [movieRatingSum, setMovieRatingSum] = useState(0)
+
+    const [isLoading, setIsLoading] = useState(true)
+    const [battlesInfo, setBattlesInfo] = useState(null)
 
     useEffect(() => {
-        sumBooks()
-        sumMovies()
+        battlesService
+            .getBattlesInfo()
+            .then(({ data }) => {
+                setBattlesInfo(data)
+                setIsLoading(false)
+            })
+            .catch(err => console.log(err))
     }, [])
 
-    useEffect(() => {
-        console.log("EL RATING TOTAL =>", bookRatingSum)
-    }, [bookRatingSum])
-
-    const sumBooks = () => {
-
-        booksService
-            .getBooks()
-            .then(({ data: books }) => {
-                let booksRatingTotal = 0
-                books.forEach((book) => {
-                    booksRatingTotal += book.bookRating
-                })
-                setBookRatingSum(booksRatingTotal)
-            })
-            .catch((err) => console.log(err))
-    }
-
-    const sumMovies = () => {
-
-        moviesService
-            .getMovies()
-            .then(({ data: movies }) => {
-                let moviesRatingTotal = 0
-                movies.forEach((movie) => {
-                    moviesRatingTotal += movie.movieRating
-                })
-                setMovieRatingSum(moviesRatingTotal)
-            })
-            .catch((err) => console.log(err))
-    }
-
-    const winner = bookRatingSum > movieRatingSum ? "BOOKS ARE WINNING!" : "MOVIES ARE WINNING!"
-
-    console.log('bookTotalRating--------', bookRatingSum)
-
     return (
-        <div>
-            <h2>Battle Resume</h2>
-            <p>Book Total Rating: {bookRatingSum}</p>
-            <p>Movie Total Rating: {movieRatingSum}</p>
-            <h3>{winner}</h3>
-        </div>
+        <>
+            {
+                isLoading
+                    ?
+                    <Loader />
+                    :
+                    <>
+                        < Col sm={12} md={6} lg={5} >
+                            <ChartDoughnut data1={battlesInfo.bookTotalRating} data2={battlesInfo.movieTotalRating} />
+                        </Col >
+                        <Col sm={12} md={6} lg={{ span: 6, offset: 1 }} >
+                            <h3>Battle Resume</h3>
+                            <p>{battlesInfo.total} battles have been played between books and movies thanks to our beloved community.</p>
+                            <hr />
+                            <h2>Guess what? {battlesInfo.winner.toUpperCase()} ARE WINNING!</h2>
+                            <hr />
+                            <p>Books Total Rating: {battlesInfo.bookTotalRating}</p>
+                            <p>Movies Total Rating: {battlesInfo.movieTotalRating}</p>
+                        </Col>
+                    </>
+            }
+        </>
     )
 }
 

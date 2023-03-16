@@ -1,10 +1,11 @@
 import BattleCard from "../BattleCard/BattleCard"
 import { Col, Row } from "react-bootstrap"
+import './BattlesList'
 
 const BattlesList = ({ battles, selection }) => {
 
 
-    const selectedBattles = selection ? battles.slice(-selection) : battles
+    const selectedBattles = selection ? battles.sort().slice(selection) : battles
 
     return (
         <Row>

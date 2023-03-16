@@ -6,6 +6,8 @@ import { AuthContext } from '../../contexts/auth.context'
 import booksService from '../../services/books.services'
 import moviesService from '../../services/movies.services'
 import usersService from '../../services/users.services'
+import ChartDoughnut from "../../components/ChartDoughnut/ChartDoughnut"
+import Loader from "../../components/Loader/Loader"
 
 
 
@@ -14,6 +16,7 @@ const BattleDetailsPage = ({ owner }) => {
     const [book, setBook] = useState({})
     const [movie, setMovie] = useState({})
     const [battleOwner, setBattleOwner] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
 
     const [battle, setBattle] = useState({
         _id: '',
@@ -56,24 +59,9 @@ const BattleDetailsPage = ({ owner }) => {
                 setBook(bookInfo.data)
                 setMovie(movieInfo.data)
                 setBattleOwner(userInfo.data)
+                setIsLoading(false)
             })
             .catch(err => console.log(err))
-
-
-        // booksService
-        //     .getBookByBookID(battle.bookID)
-        //     .then(({ data }) => setBook(data))
-        //     .catch(err => console.log(err))
-
-        // moviesService
-        //     .getMovieByMovieID(battle.movieID)
-        //     .then(({ data }) => setMovie(data))
-        //     .catch(err => console.log(err))
-
-        // usersService
-        //     .getUserById(battle.owner)
-        //     .then(({ data }) => setBattleOwner(data))
-        //     .catch(err => console.log(err))
 
     }
 
@@ -86,18 +74,13 @@ const BattleDetailsPage = ({ owner }) => {
             .catch((err) => console.error(err))
     }
 
-    // useEffect(() => {
-    //     console.log("LA BATALLAAAAAAA", battle)
-    //     console.log(book)
-    // }, [battle])
-
 
     return (
 
         <Container>
 
             <Row>
-                <Col md={{ span: 12, offset: 0 }}>
+                <Col sm={8} md={8} lg={10}>
 
                     <h1 className="mb-4">{battle.name}</h1>
                     <hr />
@@ -111,8 +94,18 @@ const BattleDetailsPage = ({ owner }) => {
                     }
 
                 </Col>
+                <Col sm={4} md={4} lg={2}>
+                    {
+                        isLoading
+                            ?
+                            <Loader />
+                            :
+                            <>
+                                <ChartDoughnut data1={Number(book.bookRating)} data2={Number(movie.movieRating)} />
+                            </>
+                    }
+                </Col>
             </Row>
-
             <Row>
                 <Col md={{ span: 6, offset: 0 }}>
 
@@ -121,7 +114,10 @@ const BattleDetailsPage = ({ owner }) => {
                     <h2 className="mb-4"> <i>{book.bookTitle}</i> </h2>
                     <h3>Writen by {book.bookAuthor}</h3>
                     <hr />
-                    <p>Published in {book.bookPublishingDate}</p>
+                    {
+                        book.bookPublishingDate && book.bookPublishingDate.lenght !== 0 &&
+                        <p>Published in {book.bookPublishingDate}</p>
+                    }
                     <p>Open Library Rating: {book.bookRating}</p>
 
                 </Col>

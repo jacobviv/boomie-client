@@ -16,22 +16,24 @@ const Navigation = () => {
     return (
         <Navbar bg={navbarStyle} variant={navbarStyle} expand="lg" className='navBar mb-4' >
             <Container>
-                <Navbar.Brand href="/">BOOMIE</Navbar.Brand>
+                <Link to="/">
+                    <Navbar.Brand as="span">BOOMIE</Navbar.Brand>
+                </Link>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Link to="/">
-                            <Nav.Link as="span">Home</Nav.Link>
-                        </Link>
                         <Link to="/battles">
                             <Nav.Link as="span">Battles</Nav.Link>
+                        </Link>
+                        <Link to="/about">
+                            <Nav.Link as="span">About</Nav.Link>
                         </Link>
                         {
                             user
                                 ?
                                 <>
                                     <Link to="/battles/create">
-                                        <Nav.Link as="span">Create Battle</Nav.Link>
+                                        <Nav.Link as="span">Create</Nav.Link>
                                     </Link>
                                     <Link>
                                         <Nav.Link as="span" onClick={logout}>Log Out</Nav.Link>

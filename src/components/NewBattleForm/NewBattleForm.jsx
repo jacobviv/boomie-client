@@ -28,7 +28,7 @@ const NewBattleForm = () => {
         author_name: '',
         ratings_average: 0,
         title: '',
-        first_publish_date: 0,
+        first_publish_year: 0,
         excerpt: '',
         key: '',
         saved: false
@@ -47,7 +47,6 @@ const NewBattleForm = () => {
     const { emitMessage } = useContext(MessageContext)
     const navigate = useNavigate()
 
-
     const handleBattleSubmit = e => {
 
         e.preventDefault()
@@ -56,6 +55,8 @@ const NewBattleForm = () => {
         const bookID = cleanKey(bookState.key)
         const movieID = movieState.id
         console.log({ bookID }, { movieID })
+        let movie = undefined
+        let book = undefined
 
         const promises = [booksServices.detailsByKey(bookID), moviesServices.detailsByKey(movieID)]
 
@@ -65,25 +66,39 @@ const NewBattleForm = () => {
 
                 console.log('BOOK DATA', bookData)
                 console.log('MOVIE DATA', movieData)
+                if (bookData.data) {
+                    book = bookData.data._id
+                }
+
+                if (movieData.data) {
+                    movie = movieData.data._id
+                }
 
                 if (!bookData.data) {
                     console.log('NO HABIA DATA EN BOOK')
                     booksServices
                         .saveBook(bookState)
-                        .then(res => console.log(res))
+                        .then(res => {
+                            book = bookData.data._id   ///////////  <--------- SHIT HAPPENS
+                            console.log(res)
+                        })
                         .catch(err => console.error(err))
                 }
                 if (!movieData.data) {
                     console.log('NO HABIA DATA EN MOVIE')
                     moviesServices
                         .saveMovie(movieState)
-                        .then(res => console.log(res))
+                        .then(res => {
+                            movie = res.data._id
+                            console.log(res)
+                        })
                         .catch(err => console.error(err))
                 }
+
             })
             .then(() => {
                 const battleName = `${bookState.title} VS ${movieState.title}`
-                const saveData = { ...battleData, bookID, movieID, name: battleName }
+                const saveData = { ...battleData, bookID, movieID, name: battleName, book, movie }
 
                 console.log('CREANDO BATALLA:', saveData)
 
@@ -104,6 +119,7 @@ const NewBattleForm = () => {
                                     setBattleData({ ...battleData, _id: data._id })
                                     refreshToken()
                                 })
+                                .catch(err => console.error(err))
                         }
 
                     })
@@ -136,7 +152,6 @@ const NewBattleForm = () => {
                 <BookSelector onChange={setBookState} />
                 <MovieSelector onChange={setMovieState} />
             </Row>
-            {/* <Button style={{ width: '100%' }} variant="dark mt-4" type="submit">Create Book vs Movie Battle</Button> */}
             <Button style={{ width: '100%', padding: '30px' }} variant="dark mt-4" type="submit">
                 Save Book vs Movie Battle
                 {bookState.title && movieState.title && (

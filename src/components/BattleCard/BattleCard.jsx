@@ -7,6 +7,8 @@ import booksService from '../../services/books.services'
 import moviesService from '../../services/movies.services'
 import usersService from '../../services/users.services'
 import { MessageContext } from "../../contexts/message.context"
+import ChartDoughnut from '../ChartDoughnut/ChartDoughnut'
+import Loader from '../Loader/Loader'
 
 
 const BattleCard = ({ name, bookID, movieID, _id, owner }) => {
@@ -18,6 +20,7 @@ const BattleCard = ({ name, bookID, movieID, _id, owner }) => {
     const [battleOwner, setBattleOwner] = useState({})
     const { emitMessage } = useContext(MessageContext)
     const { refreshToken } = useContext(AuthContext)
+    const [isLoading, setIsLoading] = useState(true)
 
 
     useEffect(() => {
@@ -35,7 +38,10 @@ const BattleCard = ({ name, bookID, movieID, _id, owner }) => {
 
         moviesService
             .getMovieByMovieID(movieID)
-            .then(({ data }) => setMovie(data))
+            .then(({ data }) => {
+                setMovie(data)
+                setIsLoading(false)
+            })
             .catch(err => console.log(err))
 
         usersService
@@ -58,9 +64,9 @@ const BattleCard = ({ name, bookID, movieID, _id, owner }) => {
     return (
         <Card className='mb-3 card'>
             <Card.Body>
-                <Card.Text>Book: "{book.bookTitle}" - {book.bookRating}</Card.Text>
+                <Card.Text> <i>"{book.bookTitle}"</i> by {book.bookAuthor}</Card.Text>
                 <hr />
-                <Card.Text>Movie: "{movie.movieTitle}" - {movie.movieRating}</Card.Text>
+                <Card.Text> <i>"{movie.movieTitle}"</i> by {movie.movieDirector}</Card.Text>
                 <hr />
                 <Link to={`/battles/details/${_id}`}>
                     <Card.Text className='battleName'> {name} </Card.Text>
@@ -68,13 +74,26 @@ const BattleCard = ({ name, bookID, movieID, _id, owner }) => {
                 <Card.Text>By {battleOwner.username}</Card.Text>
                 <hr />
                 {
+                    isLoading
+                        ?
+                        <Loader />
+                        :
+                        <>
+                            <ChartDoughnut data1={Number(book.bookRating)} data2={Number(movie.movieRating)} />
+                        </>
+                }
+                <hr />
+                {
                     book.bookRating > movie.movieRating &&
-                    <Card.Text>BOOK WINS</Card.Text>
+                    <Card.Text> <b>Book Wins</b> </Card.Text>
                 }
                 {
                     book.bookRating < movie.movieRating &&
-                    <Card.Text>MOVIE WINS</Card.Text>
+                    <Card.Text> <b>Movie Wins</b> </Card.Text>
                 }
+                <hr />
+                <Card.Text>OL {book.bookRating} vs TMD {movie.movieRating}</Card.Text>
+
             </Card.Body>
             {
                 user && user.role === 'ADMIN' &&

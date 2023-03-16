@@ -14,12 +14,13 @@ img {
 }
 
 .navBar img {
-  width: 25px;
+  height: 25px;
 }
 
 .navBar img:hover {
-  transform: scale(2);
+  transform: scale(2) rotate(360deg);
   filter: grayscale(0%);
+  transition: transform 2s;
 }
 
 .navBar a {
@@ -59,6 +60,8 @@ img {
   border-color: rgb(168, 166, 166);
   border-radius: 0%;
   border-width: 0.5px;
+  transform: scale(1) rotate(360deg);
+  transition: transform 2s;
 }
 
 .App.light {
@@ -101,4 +104,8 @@ img {
 
 .card:hover {
   transform: scale(1.015);
+}
+
+hr {
+  border-width: 1.25px;
 }

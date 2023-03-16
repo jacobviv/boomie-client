@@ -31,6 +31,10 @@ class BattleService {
         return this.api.get(`/details/${battle_id}`)
     }
 
+    getBattlesInfo() {
+        return this.api.get('/getBattlesInfo')
+    }
+
     saveBattle(battleData) {
         return this.api.post('/create', battleData)
     }

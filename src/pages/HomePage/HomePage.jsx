@@ -44,13 +44,15 @@ const HomePage = () => {
             <Container>
                 <h1>THIS IS THE BOOMIE APP!</h1>
                 <hr />
-                <h2> Just another MERN to compare books with their screen adaptations, and viceversa.</h2 >
+                <h2>The ultimate MERN to compare books with their screen adaptations, and viceversa.</h2 >
                 {user && <Link to={`/details/${user._id}`}>Go to your Personal Archive</Link>}
                 {!user && <Link to="/login">Log in to start creating your very own Book vs Movie Battle</Link>}
                 <hr />
-                <BattleResume />
+                <Row>
+                    <BattleResume />
+                </Row>
                 <hr />
-                <h3>These are the latest Book vs. Movie Battles fought:</h3>
+                <h3>Some examples of Book vs. Movie Battles fought:</h3>
                 <hr />
                 {
                     isLoading

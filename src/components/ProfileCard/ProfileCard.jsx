@@ -30,7 +30,7 @@ const ProfileCard = ({ username, email, battles, avatar }) => {
             </Row>
             <Row className='align-items-start'>
 
-                <Col md={{ span: 2 }}>
+                <Col sm={8} md={6} lg={3}>
                     <img src={avatar} alt={username} />
                 </Col>
             </Row>
