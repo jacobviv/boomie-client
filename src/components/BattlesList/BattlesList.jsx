@@ -5,7 +5,7 @@ import './BattlesList'
 const BattlesList = ({ battles, selection }) => {
 
 
-    const selectedBattles = selection ? battles.sort().slice(selection) : battles
+    const selectedBattles = selection ? battles.slice(-selection) : battles
 
     return (
         <Row>
